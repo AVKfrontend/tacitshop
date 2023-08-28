@@ -1,0 +1,26 @@
+* {
+	scroll-behavior: smooth;
+}
+a, button {
+	cursor: pointer;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-ms-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+body {
+	font-family: 'Roboto Slab', serif;
+	font-weight: 400;
+	font-size: 20px;
+	background: #fff;
+	color: #eee;
+
+	overscroll-behavior-y: none;
+	scrollbar-gutter: stable;
+}
+p {
+	text-wrap: balance;
+}
+
+
