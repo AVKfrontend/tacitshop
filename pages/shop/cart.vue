@@ -33,10 +33,10 @@
                     <td>{{ position.product.title }}</td>
                     <td>{{ position.quantity }}</td>
                     <td>${{ position.product.price }}</td>
-                    <td>${{ position.product.price ?? 0 * position.quantity }}</td>
+                    <td>${{ (position.product.price ?? 0) * position.quantity }}</td>
                     <td>
                       <button @click="deletingPruduct(position, $event)" class="cart__delete-product" type="button">
-                        <img src="../img/delete-cross.png" alt="delete">
+                        <img src="/img/delete-cross.png" alt="delete">
                       </button>
                     </td>
                   </tr>
@@ -49,7 +49,7 @@
                     <td>0</td>
                     <td>
                       <button class="cart__delete-product" type="button">
-                        <img src="../img/delete-cross.png" alt="delete">
+                        <img src="/img/delete-cross.png" alt="delete">
                       </button>
                     </td>
                   </tr>
@@ -96,7 +96,7 @@
                   </li>
                 </ul>
                 <NuxtLink to="/shop" class="btn cart__return-btn">Continue shopping</NuxtLink>
-                <NuxtLink to="/#" class="btn cart__check-btn">Procced to checkout</NuxtLink>
+                <NuxtLink to="#" class="btn cart__check-btn">Procced to checkout</NuxtLink>
               </div>
             </div>
           </div>
@@ -108,7 +108,7 @@
 </template>
 
 <script setup lang="ts">
-import ChooseQuantity from '../components/ChooseQuantity.vue'
+import ChooseQuantity from '~/components/ChooseQuantity.vue'
 import { CartInit, CartItem, Copoun } from 'utils/interfaces';
 
 const freeShipingSum = 1000
@@ -125,7 +125,7 @@ const deletingModalIsOpen = ref(false)
 
 // console.log(cartSum)
 const shippingCost = computed(() => {
-  return (+cartSum.value < freeShipingSum) ? + (+cartSum.value * shippingPercent) : 0
+  return (+cartSum.value < freeShipingSum) ? + (+cartSum.value * shippingPercent).toFixed(2) : 0
 })
 const cartTotal = computed(() => {
   return +shippingCost.value + +cartSum.value - copounVolume.value

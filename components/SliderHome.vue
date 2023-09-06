@@ -35,14 +35,15 @@
 import { ExtendedElement } from 'utils/interfaces';
 import { sliderImgPaths } from '~/src/slider_img';
 
-const transitionDuration = 200 // duration of transition in CSS
+const transitionDuration = 500 // duration of transition in CSS
+const cssDuration = `${transitionDuration}ms`
 
 const imageElement: Ref<ExtendedElement | null> = ref(null)
 const currentImgIndx: Ref<number> = ref(0);
 
 const currentImgPath = computed(() => (sliderImgPaths[currentImgIndx.value]))
 
-async function slideChange(direction: string): Promise<void> {
+async function slideChange(direction: '' | ' '): Promise<void> {
   if (!imageElement.value) return
   imageElement.value.style.opacity = '0'
   await new Promise((resolve) => setTimeout(resolve, transitionDuration))
@@ -57,5 +58,12 @@ function previousSlide() {
   currentImgIndx.value = (currentImgIndx.value === 0) ? sliderImgPaths.length - 1 : currentImgIndx.value - 1
 }
 
+onMounted(() => setInterval(() => slideChange(''), 3000))
 
 </script>
+
+<style>
+.slider__img {
+  transition: opacity v-bind(cssDuration) ease;
+}
+</style>

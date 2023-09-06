@@ -4,22 +4,22 @@
       <div class="container">
         <div class="partners__imgs">
           <div class="partners__imgs-item">
-            <img src="../img/6.png" alt="partner6">
+            <img src="/img/6.png" alt="partner6">
           </div>
           <div class="partners__imgs-item">
-            <img src="../img/5.png" alt="partner5">
+            <img src="/img/5.png" alt="partner5">
           </div>
           <div class="partners__imgs-item">
-            <img src="../img/4.png" alt="partner4">
+            <img src="/img/4.png" alt="partner4">
           </div>
           <div class="partners__imgs-item">
-            <img src="../img/3.png" alt="partner3">
+            <img src="/img/3.png" alt="partner3">
           </div>
           <div class="partners__imgs-item">
-            <img src="../img/2.png" alt="partner2">
+            <img src="/img/2.png" alt="partner2">
           </div>
           <div class="partners__imgs-item">
-            <img src="../img/1.png" alt="partner1">
+            <img src="/img/1.png" alt="partner1">
           </div>
         </div>
       </div>
@@ -59,11 +59,11 @@
           </div>
           <hr class="line" noshade>
           <div class="footer__payvar">
-            <img src="../img/visa.png" alt="visa">
-            <img src="../img/pay-pal.png" alt="pay-pal">
-            <img src="../img/mastercard.png" alt="mastercard">
-            <img src="../img/citi.png" alt="citi">
-            <img src="../img/amazon-payments.png" alt="amazon-payments">
+            <img src="/img/visa.png" alt="visa">
+            <img src="/img/pay-pal.png" alt="pay-pal">
+            <img src="/img/mastercard.png" alt="mastercard">
+            <img src="/img/citi.png" alt="citi">
+            <img src="/img/amazon-payments.png" alt="amazon-payments">
           </div>
           <hr class="line" noshade>
         </div>
@@ -75,19 +75,19 @@
       <div class="social__box">
         <!-- noindex -->
         <a href="#" rel="nofollow noopener noreferrer" target="_blank">
-          <img src="../img/facebook-logo.png" alt="facebook">
+          <img src="/img/facebook-logo.png" alt="facebook">
         </a>
         <a href="#" rel="nofollow noopener noreferrer" target="_blank">
-          <img src="../img/twitter-bird-logo.png" alt="twitter">
+          <img src="/img/twitter-bird-logo.png" alt="twitter">
         </a>
         <a href="#" rel="nofollow noopener noreferrer" target="_blank">
-          <img src="../img/linkedin-logo.png" alt="linkedin">
+          <img src="/img/linkedin-logo.png" alt="linkedin">
         </a>
         <a href="#" rel="nofollow noopener noreferrer" target="_blank">
-          <img src="../img/big-youtube-logo.png" alt="youtube">
+          <img src="/img/big-youtube-logo.png" alt="youtube">
         </a>
         <a href="#" rel="nofollow noopener noreferrer" target="_blank">
-          <img src="../img/google-plus.png" alt="google">
+          <img src="/img/google-plus.png" alt="google">
         </a>
         <!-- /noindex -->
       </div>

@@ -158,7 +158,7 @@ const isHistory = computed(() => currentTub.value === CurrentTub.History)
 
 function getProductID() {
   const route = useRoute()
-  return route.query.p ? +route.query.p : -1
+  return +route.params.id //route.query.p ? +route.query.p : -1
 }
 async function setProduct(id: number) {
   if (id <= 0) return

@@ -65,8 +65,8 @@
             </ul>
           </nav>
           <div class="header-cart">
-            <NuxtLink to="/cart" class="header-cart__btn">
-              <img src="../img/bag-outline.png" alt="bag-outline">
+            <NuxtLink to="/shop/cart" class="header-cart__btn">
+              <img src="/img/bag-outline.png" alt="bag-outline">
               <span v-if="cartCount" class="header-cart__count">{{ cartCount }}</span>
             </NuxtLink>
             <span class="header-cart__sum">${{ cartSum }}</span>
@@ -95,7 +95,7 @@ const cartCount = computed(() => cart.value.list.length)
 const pathsArray = [
   { id: 1, path: "/", name: "Home" },
   { id: 2, path: "/shop", name: "Shop" },
-  { id: 3, path: "/cart", name: "Cart" },
+  { id: 3, path: "/shop/cart", name: "Cart" },
 ];
 
 const route = useRoute();

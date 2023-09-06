@@ -20,7 +20,6 @@ const cssLeft = computed(() => coordinates.value.x - 200 + 'px')
 const isQuantityOne = computed(() => total.value < 2)
 
 function chooseQuantity(totalQuantity: number, coord: Coordinates): Promise<number | unknown> {
-  // nextTick(setCoordinates)
   setCoordinates(coord)
   coordinates.value = coord
   document.addEventListener('keydown', keyHendler)
@@ -35,10 +34,6 @@ function hendler(quantity: number): void {
   unsetCoordinates()
   document.removeEventListener('keydown', keyHendler)
 }
-// function defineCoordinates(event: MouseEvent): void {
-//   cursorCoord.value.x = event.clientX
-//   cursorCoord.value.y = event.clientY
-// }
 function setCoordinates(coord: Coordinates) {
   coordinates.value = coord
 }
@@ -52,9 +47,7 @@ function keyHendler(event: KeyboardEvent): void {
 
 defineExpose({
   chooseQuantity,
-  // defineCoordinates
 })
-
 
 </script>
 
