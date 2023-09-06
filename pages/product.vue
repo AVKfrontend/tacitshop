@@ -2,7 +2,7 @@
   <main>
     <intro-area>
       <template #page>
-          <page-title title-text="Product"></page-title>
+        <page-title title-text="Product"></page-title>
       </template>
     </intro-area>
     <section :id="`p${productId}`" class="product-hood">

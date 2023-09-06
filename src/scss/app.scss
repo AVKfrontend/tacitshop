@@ -14,6 +14,27 @@
   margin: 0 auto;
   // color: $grey_color;
 }
+.title {
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  color: $title_color;
+  font-weight: 700;
+  filter: drop-shadow(0.5px 0.866px 0.5px rgba(0, 0, 0, 0.35));
+  & span {
+    color: $shop_color;
+  }
+}
+.btn {
+  display: block;
+  width: 170px;
+  background: $shop_color;
+  border-radius: 1px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 14px;
+  line-height: 50px;
+  box-shadow: 1px 4px 8px 4px rgba(0, 0, 0, 0.8);
+}
 .contacts {
   @extend %text-m-l;
   &__img {
@@ -66,6 +87,36 @@
     display: none;
   }
 }
+.header-cart {
+  @include flex_between;
+  align-items: center;
+  min-width: 110px;
+  &__btn {
+    @include flex_center;
+    margin-right: 10px;
+    width: 38px;
+    aspect-ratio: 1;
+    border: solid 1px $line_color;
+    border-radius: 50%;
+    position: relative;
+  }
+  &__count {
+    @include flex_center;
+    width: 21px;
+    aspect-ratio: 1;
+    position: absolute;
+    right: -9px;
+    top: -4px;
+    padding-bottom: 2px;
+    border-radius: 50%;
+    background-color: $line_color;
+    color: $shop_color;
+    font-size: 12px;
+  }
+  @media (max-width: 444px) {
+    display: none;
+  }
+}
 #intro {
   background: linear-gradient(
       to right,
@@ -73,27 +124,6 @@
       rgba(255, 255, 255, 0.3) 100%
     ),
     url(/img/skate_sneaker_480x300.webp) no-repeat center / cover;
-}
-.title {
-  text-transform: uppercase;
-  font-size: 1.5rem;
-  color: $title_color;
-  font-weight: 700;
-  filter: drop-shadow(0.5px 0.866px 0.5px rgba(0, 0, 0, 0.35));
-  & span {
-    color: $shop_color;
-  }
-}
-.btn {
-  display: block;
-  width: 170px;
-  background: $shop_color;
-  border-radius: 1px;
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 14px;
-  line-height: 50px;
-  box-shadow: 1px 4px 8px 4px rgba(0, 0, 0, 0.8);
 }
 .utp {
   // margin: 10px 0;
@@ -211,7 +241,7 @@
   color: $line_color;
   background: $line_color;
   border: none;
-  height: 4px;
+  height: 2px;
 
   &--shop-start {
     margin-top: 15px;
@@ -333,8 +363,8 @@
 .block3 {
   margin-top: 100px;
   display: none;
-  &__pictures {
 
+  &__pictures {
     width: calc(100% / 3);
     padding-right: 15px;
   }
@@ -664,6 +694,111 @@
   text-align: center;
   color: $alert_color;
 }
+// -------------------------Cart-----------------------------------//
+.cart {
+  padding-bottom: 97px;
+  color: $text_color;
+  font-size: 14px;
+  line-height: 14px;
+
+  &__subwrupper {
+    @include flex_between;
+    flex-wrap: wrap;
+  }
+
+  &__copoun {
+    width: 252px;
+
+    *:focus {
+      outline: solid $hover_color;
+    }
+    &-btn {
+      @include alternativ_btn;
+      margin-top: 16px;
+      border-color: $line_color;
+      color: $text_color;
+    }
+    input {
+      border: solid 2px $line_color;
+      width: 100%;
+      height: 50px;
+      padding-left: 16px;
+      color: $input_color;
+      caret-color: $input_color;
+    }
+  }
+
+  &__wrupper {
+    width: fit-content;
+  }
+
+  &__title {
+    margin-top: 45px;
+    margin-bottom: 28px;
+    font-weight: 400;
+  }
+
+  &__list {
+    table {
+      background-color: $pruduct_detail_bg_color;
+      text-align: center;
+      th {
+        width: 84px;
+        padding: 16px 0;
+        background-color: $shop_color;
+        color: #fff;
+        font-size: 11px;
+        line-height: 11px;
+        &:first-child {
+          width: 226px;
+        }
+        &:last-child {
+          width: fit-content;
+        }
+      }
+      td {
+        padding: 16px 0;
+        border-bottom: solid 2px $line_color;
+      }
+    }
+  }
+
+  &__delete-product {
+    padding: 21px;
+  }
+
+  &__total {
+    max-width: 303px;
+    margin: 0 auto;
+    &-box {
+      padding: 53px 31px 30px 31px;
+      background-color: $pruduct_detail_bg_color;
+    }
+    &-row {
+      @include flex_between;
+    }
+    &-line {
+      width: 53px;
+      margin: 22px auto;
+    }
+  }
+  .btn {
+    width: 100%;
+  }
+  &__return-btn {
+    @include alternativ_btn;
+    margin-top: 28px;
+  }
+  &__check-btn {
+    box-shadow: none;
+    margin-top: 12px;
+    color: #fff;
+  }
+
+  &__modal {
+    opacity: 0;
+  }
+}
 
 // -------------------------FOOTER-----------------------------------//
 #footer {
@@ -834,17 +969,6 @@
     justify-content: space-around;
     width: 500px;
   }
-  .menu {
-    &__list {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 10px;
-    }
-    &__item--non {
-      display: block;
-    }
-  }
   .product-card {
     @include flex_between;
     padding: 100px 0;
@@ -870,6 +994,17 @@
 @media screen and (min-width: 767px) {
   .container {
     width: 735px;
+  }
+  .menu {
+    &__list {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+    &__item--non {
+      display: block;
+    }
   }
   .block3 {
     display: flex;

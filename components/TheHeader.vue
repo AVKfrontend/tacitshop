@@ -56,7 +56,7 @@
           <div class="logo">TacitShop</div>
           <nav class="menu">
             <ul class="menu__list">
-              <li v-for="but in PathArray" class="menu__item" :class="{
+              <li v-for="but in pathsArray" class="menu__item" :class="{
                 'menu__item--current': isCurrent(but.path),
                 'menu__item--clik': isButtonDown,
               }" @mousedown="[(isButtonDown = true)]" @mouseup="[(isButtonDown = false)]">
@@ -64,6 +64,13 @@
               </li>
             </ul>
           </nav>
+          <div class="header-cart">
+            <NuxtLink to="/cart" class="header-cart__btn">
+              <img src="../img/bag-outline.png" alt="bag-outline">
+              <span v-if="cartCount" class="header-cart__count">{{ cartCount }}</span>
+            </NuxtLink>
+            <span class="header-cart__sum">${{ cartSum }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -71,13 +78,29 @@
 </template>
 
 <script setup lang="ts">
-const PathArray = [
+import { CartInit } from 'utils/interfaces';
+
+useSeoMeta({
+  title: 'Tacit Shop',
+  description: 'Most-loved online fashion store featuring new deals',
+})
+
+const cart: Ref<CartInit> = useCartStorage()
+// console.log(cart)
+
+let isButtonDown: Ref<boolean> = ref(false);
+
+const cartCount = computed(() => cart.value.list.length)
+
+const pathsArray = [
   { id: 1, path: "/", name: "Home" },
   { id: 2, path: "/shop", name: "Shop" },
+  { id: 3, path: "/cart", name: "Cart" },
 ];
-let isButtonDown: Ref<true | false> = ref(false);
-const rout: any = useRoute();
-function isCurrent(currentPath: String): Boolean {
-  return currentPath === rout.path;
+
+const route = useRoute();
+function isCurrent(currentPath: string): boolean {
+  return (currentPath === route.path);
 }
+
 </script>
