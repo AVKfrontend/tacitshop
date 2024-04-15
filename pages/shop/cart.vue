@@ -123,7 +123,6 @@ const copounCode = ref('')
 const copoun: Ref<Copoun> = ref({ volume: 0 })
 const deletingModalIsOpen = ref(false)
 
-// console.log(cartSum)
 const shippingCost = computed(() => {
   return (+cartSum.value < freeShipingSum) ? + (+cartSum.value * shippingPercent).toFixed(2) : 0
 })

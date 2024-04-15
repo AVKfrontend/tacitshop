@@ -8,18 +8,18 @@
 </template>
 
 <script setup lang="ts">
+import { Coordinate } from "~/utils/types";
 
 let choosed: ((value: number) => void) | null = null
 
 let total = ref(0)
-type Coordinates = { x: number; y: number; }
 const coordinates = ref({ x: -1000, y: 0 })
 
 const cssTop = computed(() => coordinates.value.y + 'px')
 const cssLeft = computed(() => coordinates.value.x - 200 + 'px')
 const isQuantityOne = computed(() => total.value < 2)
 
-function chooseQuantity(totalQuantity: number, coord: Coordinates): Promise<number | unknown> {
+function chooseQuantity(totalQuantity: number, coord: Coordinate): Promise<number | unknown> {
   setCoordinates(coord)
   coordinates.value = coord
   document.addEventListener('keydown', keyHendler)
@@ -34,7 +34,7 @@ function hendler(quantity: number): void {
   unsetCoordinates()
   document.removeEventListener('keydown', keyHendler)
 }
-function setCoordinates(coord: Coordinates) {
+function setCoordinates(coord: Coordinate) {
   coordinates.value = coord
 }
 function unsetCoordinates() {
@@ -51,7 +51,7 @@ defineExpose({
 
 </script>
 
-<style scoped>
+<style>
 .modal {
   position: fixed;
   left: v-bind(cssLeft);
@@ -64,6 +64,7 @@ defineExpose({
   color: #3C4852;
   font-size: 14px;
   transition: opacity 0.2s ease;
+  z-index: 3;
 }
 
 .modal .btn {

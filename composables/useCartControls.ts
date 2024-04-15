@@ -1,4 +1,6 @@
-import { CartInit, CartItem, Product } from "utils/interfaces";
+import { CartInit, CartItem, Product, ServerUserCarts } from "utils/interfaces";
+import { paths } from "~/src/paths";
+import { UseFetchOptions } from "nuxt/app";
 // const useCart: Ref<CartInit> = useState('cart')
 
 const cartInit: CartInit = {
@@ -25,7 +27,33 @@ export function useCartStorage() {
 
   return useCart();
 }
-
+export async function getCart(id: number) {
+  const user = useUserStorage();
+  const runtimeConfig = useRuntimeConfig();
+  const url = paths.getCart + id;
+  const options: UseFetchOptions<string> = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${user.value.token}`,
+    },
+    baseURL: runtimeConfig.public.baseURL,
+  };
+  const cartFromServer: ServerUserCarts = await requestCart(url, options);
+  const productsList: Product[] = [];
+  if (cartFromServer?.carts[0]?.products) {
+    productsList.push(...cartFromServer?.carts[0]?.products);
+    console.log(productsList[0]?.quantity);
+  }
+  return productsList;
+}
+export async function joinCart(productsList: Product[]) {
+  if (productsList.length) {
+    productsList.forEach((el) => {
+      //addToCart(el.id, el.quantity); //?????????????????
+    });
+  }
+}
 export async function addToCart(
   id: number,
   quantity: number = 1
@@ -54,7 +82,7 @@ export function deleteFromCart(id: number, quantity: number): void {
   revisingCart(cart);
 }
 
-function saveCart(cart: Ref<CartInit>) {
+function saveCart(cart: Ref<CartInit>): void {
   localStorage.setItem("cart", JSON.stringify(cart.value));
 }
 function syncCart(e: StorageEvent): void {
@@ -63,7 +91,7 @@ function syncCart(e: StorageEvent): void {
   if (e.newValue === null) cart.value = cartInit;
   else restoreCart();
 }
-function restoreCart() {
+function restoreCart(): void {
   const _value = localStorage.getItem("cart");
   if (!_value) return;
   const cart: Ref<CartInit> = useCartStorage();

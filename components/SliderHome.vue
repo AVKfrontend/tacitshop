@@ -35,6 +35,8 @@
 import { ExtendedElement } from 'utils/interfaces';
 import { sliderImgPaths } from '~/src/slider_img';
 
+let change: NodeJS.Timeout | undefined
+
 const transitionDuration = 500 // duration of transition in CSS
 const cssDuration = `${transitionDuration}ms`
 
@@ -58,7 +60,10 @@ function previousSlide() {
   currentImgIndx.value = (currentImgIndx.value === 0) ? sliderImgPaths.length - 1 : currentImgIndx.value - 1
 }
 
-onMounted(() => setInterval(() => slideChange(''), 3000))
+onMounted(() => {
+  change = setInterval(() => slideChange(''), 3000)
+})
+onUnmounted(() => clearInterval(change))
 
 </script>
 

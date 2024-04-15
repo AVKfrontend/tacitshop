@@ -10,6 +10,7 @@ export interface Product {
   category?: string;
   thumbnail?: string;
   images?: string[];
+  quantity?: number;
 }
 
 export interface DataObj {
@@ -17,6 +18,27 @@ export interface DataObj {
   total?: number;
   limit?: number;
   skip?: number;
+}
+
+export interface UserObj {
+  id: number;
+  username?: string;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  gender?: string;
+  image?: string;
+  token?: string;
+}
+export interface ServerUserCarts {
+  carts: UserCart[];
+  total: number;
+  skip: number;
+  limit: number;
+}
+interface UserCart {
+  id?: number;
+  products?: Product[];
 }
 
 export interface ExtendedElement extends Element {

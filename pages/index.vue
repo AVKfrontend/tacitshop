@@ -7,7 +7,7 @@
 				<h2 class="title utp__title">but <span>mischief</span></h2>
 				<NuxtLink to="/shop" class="btn">shop now</NuxtLink>
 			</template>
-		</IntroArea> -->
+</IntroArea> -->
 		<section id="offers">
 			<div class="container">
 				<ul class="conditions">
@@ -75,6 +75,11 @@
 								<span class="block3__button-arrow"></span>
 							</div>
 						</button>
+						<picture class="block3__btn-img">
+							<source srcset="/img/Mens_Lifestyle_2x.webp" media="(min-width:1199px)">
+							<source srcset="/img/Mens_Lifestyle_1x.webp" media="(max-width:1198px)">
+							<img src="/img/Mens_Lifestyle.jpg" alt="Mens Lifestyle">
+						</picture>
 					</div>
 				</article>
 			</div>

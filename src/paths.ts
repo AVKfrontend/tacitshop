@@ -17,6 +17,8 @@ export const enum paths {
   categoriesPath = "/products/categories",
   categoryPath = "/products/category",
   productsSearch = "https://dummyjson.com/products/search?q=",
+  loginPath = "/auth/login",
+  getCart = "/carts/user/",
 }
 
 // export class Paths {
