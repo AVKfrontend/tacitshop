@@ -1,15 +1,12 @@
 <template>
   <div class="shop__info-wrup">
     <h3 class="shop__title">{{ prod.title }}</h3>
-    <!-- <p class="shop__info">{{ prod.description }}</p> -->
   </div>
   <div class="shop__img-wrup">
     <span class="shop__price">{{ prod.price }} USD</span>
     <img :src="prod.thumbnail" :alt="`Img of ${prod.title}`" class="shop__img" loading="lazy" decoding="async" />
   </div>
-  <NuxtLink :to="`/shop/${prod.id}`" :prod_id="prod.id" class="btn shop__btn details">
-    <!-- :to="`/product#p${prod.id}`" -->
-    <!-- :to="`/product?p=${prod.id}`" -->
+  <NuxtLink :to="`/shop/${prod.id}`" class="btn shop__btn details"><!-- :prod_id="prod.id" -->
     <span>See details</span>
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="24"
       viewBox="11 14 20 12">
@@ -18,7 +15,7 @@
         data-name="eye-outline" transform="translate(11 14)" />
     </svg>
   </NuxtLink>
-  <button type="button" @:click="addToCart(prod.id as number)" class="btn shop__btn">
+  <button type="button" @:click="addToCart(+prod.id)" class="btn shop__btn">
     <span>Add to card</span>
     <svg xmlns="http://www.w3.org/2000/svg" width="40.033" height="40.033" viewBox="238 281 20.017 20.017">
       <path

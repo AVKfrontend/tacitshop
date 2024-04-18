@@ -137,7 +137,7 @@ async function doLogin(e: MouseEvent) {
   let user = await loginUser(nic, pas)
   while (!user) {
     logForm.value?.error()
-    const res = await logForm.value?.wait()//.then(res => res ? res : { nic: "", pas: "" })
+    const res = await logForm.value?.wait()
     const { nic, pas } = res ? res : { nic: "", pas: "" }
     if (nic === "cancel" && pas === "-1") {
       closeLoginForm()

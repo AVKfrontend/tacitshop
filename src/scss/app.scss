@@ -640,10 +640,20 @@
     width: 100%;
     aspect-ratio: 1 / 1.08108;
     background-color: #fff;
+    overflow: hidden;
+
+    // &:hover {
+    //   img {
+    //     width: 120%;
+    //     height: 120%;
+    //   }
+    // }
   }
 
   &__img {
+    $duration: 0.1s;
     @include img_position(contain);
+    transition: width $duration, height $duration, top $duration, left $duration;
   }
 
   &__rigth,

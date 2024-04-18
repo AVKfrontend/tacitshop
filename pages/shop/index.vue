@@ -43,7 +43,6 @@ import { paths } from "~/src/paths";
 import { Product } from "~/utils/interfaces";
 
 const runtimeConfig = useRuntimeConfig()
-// const baseURL = 'https://dummyjson.com'
 
 const numbersItemsOnPage: number[] = [2, 3, 4, 6, 8, 9, 10, 12, 16, 18, 20];
 
@@ -83,7 +82,6 @@ async function setProductsList(): Promise<void> {
   products.push(...productsArray)
 }
 function categoryChange(): void {
-  // page.value = 1
   setProductsList()
 }
 function updateMaxNumberOfProducts(total: number): void {

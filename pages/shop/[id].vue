@@ -9,7 +9,7 @@
       <div class="container">
         <div v-if="productId > 0" class="product-card">
           <div class="product-card__slider">
-            <div class="product-card__picture">
+            <div @mouseenter="startMouseFollow" @mouseleave="stopMouseFollow" class="product-card__picture">
               <picture class="">
                 <source :srcset="mainImg" media="(min-width: 900px)">
                 <img :src="mainImg" alt="" class="product-card__img">
@@ -60,7 +60,8 @@
                 <button @click="quantity++" class="product-card__options-btn" type="button"><span>+</span></button>
               </div>
               <div class="product-card__submitarea">
-                <button @click="addToCart(productId, quantity)" class="product-card__submitarea-btn" type="button">Add to
+                <button @click="addToCart(productId, quantity)" class="product-card__submitarea-btn" type="button">Add
+                  to
                   cart</button>
               </div>
             </div>
@@ -136,8 +137,12 @@ enum CurrentTub {
   Details,
   History
 }
+const imgScaleIndex = .2
+const positionIndex = imgScaleIndex * (1 - imgScaleIndex)
+const imgSizeIndex = 1 + imgScaleIndex
 
 const ratingStarColor = '#48689A'
+let hoverTarget: HTMLElement = document.createElement("DIV")
 
 const productId = ref(-1)
 const currentProduct: Ref<Product> = ref({ id: -1 })
@@ -145,20 +150,25 @@ const mainImgIndx = ref(0)
 const imgList: Ref<Array<string>> = ref([])
 const quantity = ref(1)
 const currentTub: Ref<CurrentTub> = ref(CurrentTub.Description)
+const imgTopIndex = ref(0)
+const imgLeftIndex = ref(0)
+const imgWidthIndex = ref(0)
+const imgHeightIndex = ref(0)
 
 const mainImg = computed(() => imgList.value[mainImgIndx.value])
 const rating = computed(() => currentProduct.value.rating)
 const isDescription = computed(() => currentTub.value === CurrentTub.Description)
 const isDetails = computed(() => currentTub.value === CurrentTub.Details)
 const isHistory = computed(() => currentTub.value === CurrentTub.History)
+const imgTop = computed(() => (- imgTopIndex.value * positionIndex) + "px")
+const imgLeft = computed(() => (- imgLeftIndex.value * positionIndex) + "px")
+const imgWidth = computed(() => imgWidthIndex.value + "px")
+const imgHeight = computed(() => imgHeightIndex.value + "px")
 
-// getProductID()
-// setProduct(productId)
-// setTimeout(() => setProduct(productId), 0)
 
 function getProductID() {
   const route = useRoute()
-  return +route.params.id //route.query.p ? +route.query.p : -1
+  return +route.params.id
 }
 async function setProduct(id: number) {
   if (id <= 0) return
@@ -166,7 +176,7 @@ async function setProduct(id: number) {
   setImgList()
 }
 function setImgList() {
-  imgList.value = currentProduct.value.images as string[] //.slice(0, 3) 
+  imgList.value = currentProduct.value.images ? currentProduct.value.images : []//.slice(0, 3) 
 }
 function previousImg() {
   mainImgIndx.value = mainImgIndx.value === 0 ? imgList.value.length - 1 : mainImgIndx.value - 1
@@ -181,8 +191,28 @@ function productChange() {
   productId.value = getProductID()
   setProduct(productId.value)
 }
+function startMouseFollow(event: MouseEvent) {
+  if (event.target) {
+    hoverTarget = event.target as HTMLElement
+    hoverTarget.addEventListener("mousemove", mouseFollow)
+    imgWidthIndex.value = hoverTarget.offsetWidth * imgSizeIndex
+    imgHeightIndex.value = hoverTarget.offsetHeight * imgSizeIndex
+  }
+}
+function stopMouseFollow() {
+  imgTopIndex.value = 0
+  imgLeftIndex.value = 0
+  imgWidthIndex.value = imgWidthIndex.value / imgSizeIndex
+  imgHeightIndex.value = imgHeightIndex.value / imgSizeIndex
+  hoverTarget.removeEventListener("mousemove", mouseFollow)
+}
+const mouseFollow = function (event: MouseEvent) {
+  imgLeftIndex.value = event.offsetX
+  imgTopIndex.value = event.offsetY
+}
 
 onMounted(() => {
+  console.log("x")
   window.addEventListener('hashchange', productChange)
   productChange()
 })
@@ -191,4 +221,13 @@ onUnmounted(() => window.removeEventListener('hashchange', productChange))
 
 </script>
 
-
+<style scoped lang="scss">
+.product-card__picture:hover {
+  img {
+    top: v-bind(imgTop);
+    left: v-bind(imgLeft);
+    width: v-bind(imgWidth);
+    height: v-bind(imgHeight);
+  }
+}
+</style>

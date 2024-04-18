@@ -107,7 +107,6 @@ const preferenceProductsList: Ref<Product[]> = ref([])
 const featuredProductsList: Ref<Product[]> = ref([])
 
 const user = useState('user', () => ({ id: -1 }))
-// const cart: Ref<CartInit> = useStorage()
 // console.log(user.value)
 
 async function setPreferenceProductsList(amount: number): Promise<void> {
