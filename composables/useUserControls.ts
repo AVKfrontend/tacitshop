@@ -27,7 +27,7 @@ export const isLogin = computed(() => {
 export async function loginUser(nic: string, pas: string) {
   const runtimeConfig = useRuntimeConfig();
   const url = paths.loginPath;
-  const options: UseFetchOptions<string> = {
+  const options: UseFetchOptions<UserObj> = {
     method: "POST",
     body: JSON.stringify({
       username: nic,

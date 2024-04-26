@@ -212,7 +212,6 @@ const mouseFollow = function (event: MouseEvent) {
 }
 
 onMounted(() => {
-  console.log("x")
   window.addEventListener('hashchange', productChange)
   productChange()
 })

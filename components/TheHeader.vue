@@ -61,7 +61,7 @@
             <button class="user__log-btn" v-if="isLogin" @click="logoutUser()">Logout</button>
             <button class="user__log-btn" v-else @click="doLogin($event)">Login</button>
             <LoginForm :class="{ 'user__modal': !loginModalIsOpen }" ref="logForm"></LoginForm>
-
+            <CartActionSelect ref="cartActionModal"></CartActionSelect>
           </div>
         </div>
         <div class="row">
@@ -92,6 +92,7 @@
 <script setup lang="ts">
 import { CartInit, Product, UserObj } from 'utils/interfaces';
 import LoginForm from './LoginForm.vue';
+import CartActionSelect from './CartActionSelect.vue';
 import { Coordinate } from 'utils/types';
 
 useSeoMeta({
@@ -101,11 +102,14 @@ useSeoMeta({
 
 type LF = InstanceType<typeof LoginForm>
 const logForm: Ref<LF | null> = ref(null)
+type CAM = InstanceType<typeof CartActionSelect>
+const cartActionModal: Ref<CAM | null> = ref(null)
 
 const loginModalIsOpen = ref(false);
 const cart: Ref<CartInit> = useCartStorage()
 const user: Ref<UserObj> = useUserStorage()
 useUserKeeping()
+useCartKeeping()
 
 let isButtonDown: Ref<boolean> = ref(false);
 
@@ -147,10 +151,31 @@ async function doLogin(e: MouseEvent) {
   }
   closeLoginForm()
   const cartFromServer: Product[] = await getCart(user.id);
+  if (!cartFromServer.length) return
+  if (!cart.value.list.length) {
+    joinCart(cartFromServer)
+    return
+  }
+  const answer = await cartActionModal?.value?.cartActionRequest()
+  if (answer === "join") {
+    joinCart(cartFromServer)
+    return
+  }
+  if (answer === "keep_prev") {
+    keepPrevCart(cartFromServer)
+    return
+  }
+  if (answer !== "keep_new") console.log("Error cart action select")
 }
 function closeLoginForm() {
   logForm.value?.close()
   loginModalIsOpen.value = false
 }
+
+onBeforeUnmount(() => {
+  console.log("unmount header")
+  saveCartToServer()
+});
+
 
 </script>

@@ -36,7 +36,7 @@ export interface ServerUserCarts {
   skip: number;
   limit: number;
 }
-interface UserCart {
+export interface UserCart {
   id?: number;
   products?: Product[];
 }

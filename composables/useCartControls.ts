@@ -1,7 +1,12 @@
-import { CartInit, CartItem, Product, ServerUserCarts } from "utils/interfaces";
+import {
+  CartInit,
+  CartItem,
+  Product,
+  ServerUserCarts,
+  UserCart,
+} from "utils/interfaces";
 import { paths } from "~/src/paths";
 import { UseFetchOptions } from "nuxt/app";
-// const useCart: Ref<CartInit> = useState('cart')
 
 const cartInit: CartInit = {
   list: [],
@@ -18,20 +23,20 @@ export const cartSum = computed(() => _cartSum.value.toFixed(2));
 
 export function useCartStorage() {
   const useCart = () => useState("cart", () => cartInit);
-
+  return useCart();
+}
+export function useCartKeeping() {
   onMounted(() => {
     restoreCart();
     window.addEventListener("storage", syncCart);
   });
   onUnmounted(() => window.removeEventListener("storage", syncCart));
-
-  return useCart();
 }
 export async function getCart(id: number) {
   const user = useUserStorage();
   const runtimeConfig = useRuntimeConfig();
   const url = paths.getCart + id;
-  const options: UseFetchOptions<string> = {
+  const options: UseFetchOptions<ServerUserCarts | UserCart> = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -39,20 +44,61 @@ export async function getCart(id: number) {
     },
     baseURL: runtimeConfig.public.baseURL,
   };
-  const cartFromServer: ServerUserCarts = await requestCart(url, options);
+  const cartFromServer: ServerUserCarts | UserCart | null = await requestCart(
+    url,
+    options
+  );
   const productsList: Product[] = [];
-  if (cartFromServer?.carts[0]?.products) {
-    productsList.push(...cartFromServer?.carts[0]?.products);
-    console.log(productsList[0]?.quantity);
+  if (cartFromServer && "carts" in cartFromServer) {
+    const typedCartFromServer: ServerUserCarts =
+      cartFromServer as ServerUserCarts;
+    if (typedCartFromServer?.carts[0]?.products) {
+      productsList.push(...typedCartFromServer.carts[0].products);
+    }
+  } else {
+    console.log("Illegel type of server cart request");
   }
   return productsList;
 }
-export async function joinCart(productsList: Product[]) {
+type ProductItemForSave = { id: number; quantity: number };
+export async function saveCartToServer() {
+  if (!isLogin) return;
+  const user = useUserStorage();
+  const cart = useCartStorage();
+  const productsList: ProductItemForSave[] = cart.value.list.map((el) => {
+    return { id: el.product.id, quantity: el.quantity };
+  });
+  const runtimeConfig = useRuntimeConfig();
+  const url = paths.addCart;
+  const options: UseFetchOptions<ServerUserCarts | UserCart> = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${user.value.token}`,
+    },
+    baseURL: runtimeConfig.public.baseURL,
+    body: JSON.stringify({
+      userId: user.value.id,
+      products: productsList,
+    }),
+  };
+  const resFromServer = await requestCart(url, options);
+  if (!resFromServer) {
+    console.log("Can`t save cart to server");
+  }
+}
+export function joinCart(productsList: Product[]) {
   if (productsList.length) {
     productsList.forEach((el) => {
-      //addToCart(el.id, el.quantity); //?????????????????
+      addToCart(el.id, el.quantity);
     });
+    saveCartToServer();
   }
+}
+export function keepPrevCart(productsList: Product[]) {
+  const cart: Ref<CartInit> = useCartStorage();
+  cart.value = cartInit;
+  joinCart(productsList);
 }
 export async function addToCart(
   id: number,

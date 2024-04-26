@@ -1,6 +1,31 @@
 import { UseFetchOptions } from "nuxt/app";
-import { DataObj, UserObj, ServerUserCarts } from "~/utils/interfaces";
+import {
+  DataObj,
+  UserObj,
+  ServerUserCarts,
+  UserCart,
+} from "~/utils/interfaces";
 
+export async function requestUserList(
+  url: string,
+  options?: UseFetchOptions<UserObj>
+): Promise<UserObj | null> {
+  let usefulRes: UserObj | null = null;
+  try {
+    usefulRes = await useFetch<UserObj>(url, options).then(
+      (res) => res?.data?.value
+    );
+    if (!usefulRes) {
+      console.log("second request User");
+      usefulRes = await useFetch(url, options).then((res) => res.data.value);
+    }
+  } catch {
+    (err: Error) => {
+      errorHandler(err);
+    };
+  }
+  return usefulRes;
+}
 export async function requestProductsList(
   url: string,
   options?: UseFetchOptions<string>
@@ -19,33 +44,23 @@ export async function requestProductsList(
 function errorHandler(err: Error): void {
   console.error(err);
 }
-export async function requestUserList(
-  url: string,
-  options?: UseFetchOptions<string>
-): Promise<UserObj> {
-  let usefulRes: UserObj = (await useFetch(url, options)
-    .then((res) => res?.data?.value)
-    .catch(errorHandler)) as unknown as UserObj;
-  if (!usefulRes) {
-    console.log("second request User");
-    usefulRes = (await useFetch(url, options)
-      .then((res) => res.data.value)
-      .catch(errorHandler)) as unknown as UserObj;
-  }
-  return usefulRes || null;
-}
 export async function requestCart(
   url: string,
-  options?: UseFetchOptions<string>
+  options?: UseFetchOptions<ServerUserCarts | UserCart>
 ) {
-  let usefulRes = (await useFetch(url, options)
-    .then((res) => res.data.value)
-    .catch(errorHandler)) as unknown as ServerUserCarts;
-  if (!usefulRes) {
-    console.log("second request User");
-    usefulRes = (await useFetch(url, options)
-      .then((res) => res.data.value)
-      .catch(errorHandler)) as unknown as ServerUserCarts;
+  let usefulRes: ServerUserCarts | UserCart | null = null;
+  try {
+    usefulRes = await useFetch<ServerUserCarts | UserCart>(url, options).then(
+      (res) => res.data.value
+    );
+    if (!usefulRes) {
+      console.log("second request Cart");
+      usefulRes = await useFetch<ServerUserCarts | UserCart>(url, options).then(
+        (res) => res.data.value
+      );
+    }
+  } catch {
+    (err: Error) => errorHandler(err);
   }
   return usefulRes;
 }

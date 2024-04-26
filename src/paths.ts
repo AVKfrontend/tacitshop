@@ -19,6 +19,7 @@ export const enum paths {
   productsSearch = "https://dummyjson.com/products/search?q=",
   loginPath = "/auth/login",
   getCart = "/carts/user/",
+  addCart = "/carts/add",
 }
 
 // export class Paths {
