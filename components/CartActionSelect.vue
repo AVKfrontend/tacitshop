@@ -27,7 +27,6 @@ async function cartActionRequest() {
   openSelectModal()
   const answerWait = new Promise<string>((resolve) => submitAction = resolve)
   const answer = await answerWait
-  // if (answer === ("join" | "keep_prev" | "keep_new")) { }  //?????????????????????????????????
   window.removeEventListener("keydown", keyHendlerActionSelect)
   closeSelectModal()
   return answer

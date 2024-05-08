@@ -47,7 +47,6 @@ export interface ExtendedElement extends Element {
 }
 
 export interface CartInit {
-  // sum: number,
   list: Array<CartItem>;
 }
 export interface CartItem {

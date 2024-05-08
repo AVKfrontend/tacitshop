@@ -1,6 +1,6 @@
 import { UseFetchOptions } from "nuxt/app";
 import { paths } from "~/src/paths";
-import { Copoun, Product } from "~/utils/interfaces";
+import { Copoun, DataObj, Product } from "~/utils/interfaces";
 
 export async function getProductsList(
   category: string,
@@ -12,7 +12,7 @@ export async function getProductsList(
     category === "All"
       ? paths.productsPath
       : `${paths.categoryPath}/${category}`;
-  const options: UseFetchOptions<string> = {
+  const options: UseFetchOptions<DataObj | Product> = {
     method: "GET",
     params: {
       limit: amount,
@@ -22,10 +22,21 @@ export async function getProductsList(
     baseURL: runtimeConfig.public.baseURL,
   };
 
+  let productsArray: Product[] = [{ id: -1 }],
+    total: number = 0;
   const usefulInfo = await requestProductsList(url, options);
+  if (
+    !!usefulInfo &&
+    "products" in usefulInfo &&
+    usefulInfo.products &&
+    usefulInfo.total
+  ) {
+    productsArray = usefulInfo.products;
+    total = usefulInfo.total;
+  }
   return {
-    total: usefulInfo.total as number,
-    productsArray: usefulInfo.products as Product[],
+    total,
+    productsArray,
   };
 }
 
@@ -34,7 +45,7 @@ export async function getPreferenceProductsList(
 ): Promise<Product[]> {
   const runtimeConfig = useRuntimeConfig();
   const url = paths.productsPath;
-  const options: UseFetchOptions<string> = {
+  const options: UseFetchOptions<DataObj | Product> = {
     method: "GET",
     params: {
       limit: amount,
@@ -44,15 +55,19 @@ export async function getPreferenceProductsList(
     baseURL: runtimeConfig.public.baseURL,
   };
 
+  let productsList: Product[] = [{ id: -1 }];
   const usefulInfo = await requestProductsList(url, options);
-  return usefulInfo.products as Product[];
+  if (!!usefulInfo && "products" in usefulInfo && usefulInfo.products) {
+    productsList = usefulInfo.products;
+  }
+  return productsList;
 }
 export async function getFeaturedProductsList(
   amount: number
 ): Promise<Product[]> {
   const runtimeConfig = useRuntimeConfig();
   const url = paths.productsPath;
-  const options: UseFetchOptions<string> = {
+  const options: UseFetchOptions<DataObj | Product> = {
     method: "GET",
     params: {
       limit: amount,
@@ -62,38 +77,32 @@ export async function getFeaturedProductsList(
     baseURL: runtimeConfig.public.baseURL,
   };
 
+  let productsList: Product[] = [{ id: -1 }];
   const usefulInfo = await requestProductsList(url, options);
-  return usefulInfo.products as Product[];
+  if (!!usefulInfo && "products" in usefulInfo && usefulInfo.products) {
+    productsList = usefulInfo.products;
+  }
+  return productsList;
 }
-// export async function getProduct (id: number | string): Promise<Product> {
-//   const runtimeConfig = useRuntimeConfig()
-//   const url = runtimeConfig.public.baseURL + paths.productsPath + `/${id}`
-//   const options = {
-//     method: "GET",
-//     headers: { 'Content-Type': 'application/json' },
-//     mode: "cors",
-//     credentials: "omit"
-//   }
-
-//   const usefulInfo = await fetch(url, options).then(res=>res.json())
-//   return usefulInfo as Product
-// }
 
 export async function getProduct(id: number | string): Promise<Product> {
   const runtimeConfig = useRuntimeConfig();
   const url = runtimeConfig.public.baseURL + paths.productsPath + `/${id}`;
-  const options: UseFetchOptions<string> = {
+  const options: UseFetchOptions<DataObj | Product> = {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   };
-
+  let product: Product = { id: -1 };
   const usefulInfo = await requestProductsList(url, options);
-  return usefulInfo as Product;
+  if (!!usefulInfo && !("products" in usefulInfo) && "id" in usefulInfo) {
+    product = usefulInfo;
+  }
+  return product;
 }
 
 export async function getCopoun(code: string) {
-  const copoun = await new Promise((resolve) =>
-    setTimeout(() => resolve({ name: code, volume: 12 }), 100)
+  const copoun: Copoun = await new Promise((resolve) =>
+    setTimeout(() => resolve({ name: code, volume: 12 }), 500)
   );
-  return copoun as Copoun;
+  return copoun;
 }

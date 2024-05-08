@@ -3,75 +3,38 @@
     '--swiper-navigation-color': '#fff',
     '--swiper-pagination-color': '#fff',
   }" :speed="600" :parallax="true" :pagination="{
-  clickable: true,
-}" :navigation="true" :modules="modules" class="mySwiper">
+    clickable: true,
+  }" :navigation="true" :modules="modules" class="mySwiper">
     <div slot="container-start" class="parallax-bg" :style="{
       'background-image':
-        'url(/img/skate_sneaker_480x300.webp)',//https://swiperjs.com/demos/images/nature-1.jpg
+        'url(/img/skate_sneaker_480x300.webp)',
     }" data-swiper-parallax="-23%"></div>
     <swiper-slide>
-  		<IntroArea>
-  			<template #home>
-  				<h1 class="title">fashion is nothing</h1>
-  				<h2 class="title utp__title">but <span>mischief</span></h2>
-  				<NuxtLink to="/shop" class="btn">shop now</NuxtLink>
-  			</template>
-  		</IntroArea>
-        <!-- <div class="title" data-swiper-parallax="-300">Slide 1</div>
-      <div class="subtitle" data-swiper-parallax="-200">Subtitle</div>
-      <div class="text" data-swiper-parallax="-100">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-          dictum mattis velit, sit amet faucibus felis iaculis nec. Nulla
-          laoreet justo vitae porttitor porttitor. Suspendisse in sem justo.
-          Integer laoreet magna nec elit suscipit, ac laoreet nibh euismod.
-          Aliquam hendrerit lorem at elit facilisis rutrum. Ut at ullamcorper
-          velit. Nulla ligula nisi, imperdiet ut lacinia nec, tincidunt ut
-          libero. Aenean feugiat non eros quis feugiat.
-        </p>
-      </div> -->
-    </swiper-slide><swiper-slide>
-  		<IntroArea>
-  			<template #home>
-  				<h1 class="title">fashion is nothing</h1>
-  				<h2 class="title utp__title">but <span>mischief</span></h2>
-  				<NuxtLink to="/shop" class="btn">shop now</NuxtLink>
-  			</template>
-  		</IntroArea>
-      <!-- <div class="title" data-swiper-parallax="-300">Slide 2</div>
-      <div class="subtitle" data-swiper-parallax="-200">Subtitle</div>
-      <div class="text" data-swiper-parallax="-100">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-          dictum mattis velit, sit amet faucibus felis iaculis nec. Nulla
-          laoreet justo vitae porttitor porttitor. Suspendisse in sem justo.
-          Integer laoreet magna nec elit suscipit, ac laoreet nibh euismod.
-          Aliquam hendrerit lorem at elit facilisis rutrum. Ut at ullamcorper
-          velit. Nulla ligula nisi, imperdiet ut lacinia nec, tincidunt ut
-          libero. Aenean feugiat non eros quis feugiat.
-        </p>
-      </div> -->
-    </swiper-slide><swiper-slide>
-  		<IntroArea>
-  			<template #home>
-  				<h1 class="title">fashion is nothing</h1>
-  				<h2 class="title utp__title">but <span>mischief</span></h2>
-  				<NuxtLink to="/shop" class="btn">shop now</NuxtLink>
-  			</template>
-  		</IntroArea>
-      <!-- <div class="title" data-swiper-parallax="-300">Slide 3</div>
-      <div class="subtitle" data-swiper-parallax="-200">Subtitle</div>
-      <div class="text" data-swiper-parallax="-100">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-          dictum mattis velit, sit amet faucibus felis iaculis nec. Nulla
-          laoreet justo vitae porttitor porttitor. Suspendisse in sem justo.
-          Integer laoreet magna nec elit suscipit, ac laoreet nibh euismod.
-          Aliquam hendrerit lorem at elit facilisis rutrum. Ut at ullamcorper
-          velit. Nulla ligula nisi, imperdiet ut lacinia nec, tincidunt ut
-          libero. Aenean feugiat non eros quis feugiat.
-        </p>
-      </div> -->
+      <IntroArea>
+        <template #home>
+          <h1 class="title">fashion is nothing</h1>
+          <h2 class="title utp__title">but <span>mischief</span></h2>
+          <NuxtLink to="/shop" class="btn">shop now</NuxtLink>
+        </template>
+      </IntroArea>
+    </swiper-slide>
+    <swiper-slide>
+      <IntroArea>
+        <template #home>
+          <h1 class="title">fashion is nothing</h1>
+          <h2 class="title utp__title"><span>but</span> mischief</h2>
+          <NuxtLink to="/shop" class="btn">shop now</NuxtLink>
+        </template>
+      </IntroArea>
+    </swiper-slide>
+    <swiper-slide>
+      <IntroArea>
+        <template #home>
+          <h1 class="title">fashion is nothing</h1>
+          <h2 class="title utp__title">but <span>mischief</span></h2>
+          <NuxtLink to="/shop" class="btn">shop now</NuxtLink>
+        </template>
+      </IntroArea>
     </swiper-slide>
   </swiper>
 </template>

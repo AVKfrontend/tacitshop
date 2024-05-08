@@ -166,6 +166,7 @@ async function doLogin(e: MouseEvent) {
     return
   }
   if (answer !== "keep_new") console.log("Error cart action select")
+  else saveCartToServer()
 }
 function closeLoginForm() {
   logForm.value?.close()

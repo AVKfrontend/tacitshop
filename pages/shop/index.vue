@@ -66,7 +66,6 @@ const categories = await useFetch(runtimeConfig.public.baseURL + paths.categorie
 onMounted(() => {
   onPage.value = calculateAmount() * 2
   restoreShopParams()
-  // setTimeout(() => setProductsList(), 0)
   setProductsList()
 })
 onUnmounted(() => {

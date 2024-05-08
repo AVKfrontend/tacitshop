@@ -4,9 +4,11 @@ import {
   Product,
   ServerUserCarts,
   UserCart,
+  UserObj,
 } from "utils/interfaces";
 import { paths } from "~/src/paths";
 import { UseFetchOptions } from "nuxt/app";
+import { resolve } from "path";
 
 const cartInit: CartInit = {
   list: [],
@@ -52,7 +54,7 @@ export async function getCart(id: number) {
   if (cartFromServer && "carts" in cartFromServer) {
     const typedCartFromServer: ServerUserCarts =
       cartFromServer as ServerUserCarts;
-    if (typedCartFromServer?.carts[0]?.products) {
+    if (typedCartFromServer.carts[0].products) {
       productsList.push(...typedCartFromServer.carts[0].products);
     }
   } else {
@@ -63,8 +65,8 @@ export async function getCart(id: number) {
 type ProductItemForSave = { id: number; quantity: number };
 export async function saveCartToServer() {
   if (!isLogin) return;
-  const user = useUserStorage();
-  const cart = useCartStorage();
+  const user: Ref<UserObj> = useUserStorage();
+  const cart: Ref<CartInit> = useCartStorage();
   const productsList: ProductItemForSave[] = cart.value.list.map((el) => {
     return { id: el.product.id, quantity: el.quantity };
   });
@@ -85,19 +87,27 @@ export async function saveCartToServer() {
   const resFromServer = await requestCart(url, options);
   if (!resFromServer) {
     console.log("Can`t save cart to server");
-  }
+  } else console.log("Cart saved to server");
 }
-export function joinCart(productsList: Product[]) {
+export async function joinCart(productsList: Product[]) {
+  let res: (value: void | PromiseLike<void>) => void = () => {};
+  const promise = new Promise<void>((resolve) => (res = resolve));
   if (productsList.length) {
-    productsList.forEach((el) => {
-      addToCart(el.id, el.quantity);
+    productsList.forEach(async (el, indx, arr) => {
+      await addToCart(el.id, el.quantity);
+      if (indx == arr.length - 1) res();
     });
-    saveCartToServer();
+  } else {
+    console.log("List of products is empty");
+    res();
+    return;
   }
+  await promise;
+  setTimeout(saveCartToServer, 10);
 }
 export function keepPrevCart(productsList: Product[]) {
   const cart: Ref<CartInit> = useCartStorage();
-  cart.value = cartInit;
+  cart.value = { list: [] };
   joinCart(productsList);
 }
 export async function addToCart(
@@ -128,13 +138,19 @@ export function deleteFromCart(id: number, quantity: number): void {
   revisingCart(cart);
 }
 
+export function deleteCart(): void {
+  const cart = useCartStorage();
+  cart.value = { list: [] };
+  localStorage.removeItem("cart");
+}
+
 function saveCart(cart: Ref<CartInit>): void {
   localStorage.setItem("cart", JSON.stringify(cart.value));
 }
 function syncCart(e: StorageEvent): void {
   if (e.key !== "cart") return;
   const cart: Ref<CartInit> = useCartStorage();
-  if (e.newValue === null) cart.value = cartInit;
+  if (e.newValue === null) cart.value = { list: [] };
   else restoreCart();
 }
 function restoreCart(): void {

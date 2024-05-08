@@ -4,6 +4,7 @@ import {
   UserObj,
   ServerUserCarts,
   UserCart,
+  Product,
 } from "~/utils/interfaces";
 
 export async function requestUserList(
@@ -28,16 +29,23 @@ export async function requestUserList(
 }
 export async function requestProductsList(
   url: string,
-  options?: UseFetchOptions<string>
-): Promise<DataObj> {
-  let usefulRes: DataObj = (await useFetch(url, options)
-    .then((res) => res.data.value)
-    .catch(errorHandler)) as DataObj;
-  if (!usefulRes) {
-    console.log("second request");
-    usefulRes = (await useFetch(url, options)
-      .then((res) => res.data.value)
-      .catch(errorHandler)) as DataObj;
+  options?: UseFetchOptions<DataObj | Product>
+): Promise<DataObj | Product | null> {
+  let usefulRes: DataObj | Product | null = null;
+  try {
+    usefulRes = await useFetch<DataObj | Product>(url, options).then(
+      (res) => res.data.value
+    );
+    if (!usefulRes) {
+      console.log("second request");
+      usefulRes = await useFetch<DataObj | Product>(url, options).then(
+        (res) => res.data.value
+      );
+    }
+  } catch {
+    (err: Error) => {
+      errorHandler(err);
+    };
   }
   return usefulRes;
 }

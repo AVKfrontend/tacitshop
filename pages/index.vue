@@ -1,13 +1,6 @@
 <template>
 	<main>
 		<SwiperParallax />
-		<!-- <IntroArea>
-			<template #home>
-				<h1 class="title">fashion is nothing</h1>
-				<h2 class="title utp__title">but <span>mischief</span></h2>
-				<NuxtLink to="/shop" class="btn">shop now</NuxtLink>
-			</template>
-</IntroArea> -->
 		<section id="offers">
 			<div class="container">
 				<ul class="conditions">
@@ -106,9 +99,6 @@ const amount: Ref<number> = ref(0)
 const preferenceProductsList: Ref<Product[]> = ref([])
 const featuredProductsList: Ref<Product[]> = ref([])
 
-const user = useState('user', () => ({ id: -1 }))
-// console.log(user.value)
-
 async function setPreferenceProductsList(amount: number): Promise<void> {
 	preferenceProductsList.value = await getPreferenceProductsList(amount)
 }
@@ -117,7 +107,7 @@ async function setFeaturedProductsList(amount: number): Promise<void> {
 }
 async function setProductsLists(): Promise<void> {
 	await setPreferenceProductsList(amount.value)
-	setFeaturedProductsList(amount.value / 2)
+	await setFeaturedProductsList(amount.value / 2)
 }
 
 watch(amount, () => setProductsLists)
@@ -125,18 +115,10 @@ watch(amount, () => setProductsLists)
 onMounted(() => {
 	amount.value = calculateAmount()
 	setProductsLists()
-	// 	setTimeout(setProductsLists, 0)
 	window.addEventListener('resize', () => { amount.value = calculateAmount() })
 })
 onUnmounted(() => {
 	window.removeEventListener('resize', () => { amount.value = calculateAmount() })
 })
-
-
-// setProductsLists()
-// onMounted(() => setProductsLists())
-
-// setTimeout(setProductsLists, 0)
-// onMounted(() => setTimeout(setProductsLists, 0))
 
 </script>
