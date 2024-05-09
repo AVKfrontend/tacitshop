@@ -1,0 +1,1 @@
+import{B as a,D as o,r as n,o as r,c,t as _}from"./entry.05ce73f3.js";const i={class:"title page-title"},f={__name:"PageTitle",props:{titleText:String},setup(t){a(s=>({"504f014a":o(e)}));const e=n("yellow");setInterval(l,700);function l(){e.value==="yellow"?e.value="blue":e.value="yellow"}return(s,u)=>(r(),c("h1",i,_(t.titleText),1))}};export{f as _};

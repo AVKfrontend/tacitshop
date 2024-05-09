@@ -23,7 +23,7 @@
 							-876 1019 -61 52 -150 86 -235 90 -42 2 -94 -1 -116 -6z" />
                 </g>
               </svg>
-              <span class="contacts__tel">+38(019) 283 7465</span>
+              <a href="tel:+380192837465" class="contacts__tel">+38(019) 283 7465</a>
             </div>
             <div class="f-wrup">
               <svg class="contacts__img" version="1.0" xmlns="http://www.w3.org/2000/svg" width="120.000000pt"

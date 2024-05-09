@@ -1,0 +1,1 @@
+import{_ as t,o as n,c,a as o,z as s}from"./entry.05ce73f3.js";const _={},a={id:"intro"},r={class:"container"},i={class:"utp"};function d(e,l){return n(),c("section",a,[o("div",r,[o("div",i,[s(e.$slots,"home"),s(e.$slots,"page")])])])}const m=t(_,[["render",d]]);export{m as _};
